@@ -1,0 +1,11 @@
+CREATE INDEX IF NOT EXISTS idx_pdos_facility ON pdos(facility_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_pdos_model ON pdos(proof_ai_model_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_pdos_pilot ON pdos(pilot_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_pdos_parent ON pdos(parent_pdo_id);
+CREATE INDEX IF NOT EXISTS idx_pdos_hash ON pdos(content_hash);
+CREATE INDEX IF NOT EXISTS idx_pdos_decision ON pdos(decision_result, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_scrams_active ON scrams(status, facility_id) WHERE status = 'active';
+CREATE INDEX IF NOT EXISTS idx_scrams_facility ON scrams(facility_id, triggered_at DESC);
+CREATE INDEX IF NOT EXISTS idx_models_facility ON ai_models(facility_id, status);
+CREATE INDEX IF NOT EXISTS idx_pdos_org ON pdos(org_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_scrams_org ON scrams(org_id, triggered_at DESC);
