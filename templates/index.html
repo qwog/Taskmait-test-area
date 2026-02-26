@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ProspectPilot</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>ProspectPilot</h1>
+      <p>Apollo/ZoomInfo-style sales intelligence workspace</p>
+    </header>
+
+    <main>
+      <section class="card metrics">
+        <h2>Dashboard</h2>
+        <div id="metricsGrid" class="grid"></div>
+      </section>
+
+      <section class="card">
+        <h2>Prospecting Filters</h2>
+        <div class="filters">
+          <input id="industry" placeholder="Industry (e.g. SaaS)" />
+          <input id="location" placeholder="Location contains" />
+          <input id="seniority" placeholder="Seniority (VP, Director...)" />
+          <input id="technology" placeholder="Technology (e.g. Salesforce)" />
+          <input id="minEmployees" type="number" placeholder="Min employees" value="0" />
+          <input id="minIntent" type="number" placeholder="Min intent (0-100)" value="0" />
+          <button id="searchBtn">Search Contacts</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Contacts</h2>
+        <div class="actions">
+          <input id="listName" placeholder="Save selected as list name" />
+          <button id="saveListBtn">Save List</button>
+          <button id="createSequenceBtn">Create Sequence</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Name</th>
+              <th>Title</th>
+              <th>Company</th>
+              <th>Industry</th>
+              <th>Intent</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="contactsBody"></tbody>
+        </table>
+      </section>
+
+      <section class="card two-col">
+        <div>
+          <h2>Saved Lists</h2>
+          <ul id="lists"></ul>
+        </div>
+        <div>
+          <h2>Pipeline</h2>
+          <ul id="deals"></ul>
+        </div>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>
