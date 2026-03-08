@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CareMait | Caregiver Companion</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="hero__content">
+        <p class="eyebrow">AI-Powered Care Coordination</p>
+        <h1>CareMait</h1>
+        <p class="subtitle">
+          A caregiver-first platform that combines scheduling, symptom tracking,
+          shared communication, and guidance workflows for families and care
+          teams.
+        </p>
+        <div class="hero__actions">
+          <button id="openRoadmap" class="btn btn--primary">View MVP Sprint Plan</button>
+          <button id="openMetrics" class="btn btn--ghost">See Success Metrics</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel" id="executive-summary">
+        <h2>01 Executive Summary</h2>
+        <div class="grid two">
+          <article class="card">
+            <h3>Problem</h3>
+            <p>
+              Family caregivers often juggle medication schedules, appointments,
+              symptom notes, and communication across relatives and clinicians,
+              resulting in burnout and fragmented care.
+            </p>
+          </article>
+          <article class="card">
+            <h3>Solution</h3>
+            <p>
+              CareMait provides one unified workspace with smart reminders,
+              care-plan timelines, collaborative updates, and AI-generated
+              prompts to help caregivers make better day-to-day decisions.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" id="competitive-landscape">
+        <h2>02 Competitive Landscape</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Strength</th>
+                <th>Gap</th>
+                <th>CareMait Advantage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Generic task apps</td>
+                <td>Simple checklisting</td>
+                <td>No health context</td>
+                <td>Care-specific workflows and medical-safe reminders</td>
+              </tr>
+              <tr>
+                <td>Telehealth tools</td>
+                <td>Clinician access</td>
+                <td>Weak day-to-day coordination</td>
+                <td>Continuous support between clinical visits</td>
+              </tr>
+              <tr>
+                <td>Medication apps</td>
+                <td>Dose reminders</td>
+                <td>No family collaboration</td>
+                <td>Shared activity feed and role-based permissions</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="product-overview">
+        <h2>03 Product Overview</h2>
+        <div class="grid three">
+          <article class="card">
+            <h3>Care Timeline</h3>
+            <p>Daily plan with medications, appointments, and task ownership.</p>
+          </article>
+          <article class="card">
+            <h3>Health Journal</h3>
+            <p>Track vitals, symptoms, notes, and detect trend changes early.</p>
+          </article>
+          <article class="card">
+            <h3>Family Hub</h3>
+            <p>Share updates instantly with relatives and invited clinicians.</p>
+          </article>
+          <article class="card">
+            <h3>AI Copilot</h3>
+            <p>Summarizes updates and suggests next-best caregiving actions.</p>
+          </article>
+          <article class="card">
+            <h3>Emergency Mode</h3>
+            <p>One-tap medical profile export for urgent care scenarios.</p>
+          </article>
+          <article class="card">
+            <h3>Insights Dashboard</h3>
+            <p>Flags adherence, sleep, mood, and symptom drift by week.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" id="monetization">
+        <h2>04 Monetization</h2>
+        <ul class="stack-list">
+          <li><strong>Freemium:</strong> Basic reminders and care timeline for families.</li>
+          <li><strong>Premium subscription:</strong> Advanced AI insights, exports, and multi-care recipient support.</li>
+          <li><strong>B2B partnerships:</strong> Home-care agencies and clinics onboarding caregiver cohorts.</li>
+        </ul>
+      </section>
+
+      <section class="panel" id="architecture">
+        <h2>05 Technical Architecture</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Layer</th>
+                <th>Primary Choice</th>
+                <th>Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Frontend</td>
+                <td>Web + mobile responsive UI</td>
+                <td>Fast caregiver access on any device</td>
+              </tr>
+              <tr>
+                <td>Backend</td>
+                <td>API services + event jobs</td>
+                <td>Scheduling, notifications, and secure record flow</td>
+              </tr>
+              <tr>
+                <td>Data</td>
+                <td>Encrypted relational store</td>
+                <td>Structured care tasks, logs, and profiles</td>
+              </tr>
+              <tr>
+                <td>AI Services</td>
+                <td>Prompted summary + guidance</td>
+                <td>Generate concise recommendations with guardrails</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel" id="go-to-market">
+        <h2>06 Go-to-Market Strategy</h2>
+        <div class="grid three">
+          <article class="card">
+            <h3>Phase 1</h3>
+            <p>Pilot with caregiver communities and local support groups.</p>
+          </article>
+          <article class="card">
+            <h3>Phase 2</h3>
+            <p>Partner with home-care agencies and eldercare coordinators.</p>
+          </article>
+          <article class="card">
+            <h3>Phase 3</h3>
+            <p>Scale through clinic referral programs and digital campaigns.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel" id="mvp-roadmap">
+        <h2>07 30-Day MVP Sprint Plan</h2>
+        <ol class="stack-list ordered">
+          <li><strong>Week 1:</strong> Core onboarding, caregiver profile, and care recipient setup.</li>
+          <li><strong>Week 2:</strong> Timeline planner, reminder engine, and shared feed.</li>
+          <li><strong>Week 3:</strong> Health journal logging with trend visual summaries.</li>
+          <li><strong>Week 4:</strong> AI assistant beta, QA hardening, and pilot launch prep.</li>
+        </ol>
+      </section>
+
+      <section class="panel" id="success-metrics">
+        <h2>08 Success Metrics</h2>
+        <div class="metrics">
+          <article class="metric">
+            <p class="metric__value">70%</p>
+            <p class="metric__label">Weekly active caregivers at 90 days</p>
+          </article>
+          <article class="metric">
+            <p class="metric__value">40%</p>
+            <p class="metric__label">Reduction in missed care tasks</p>
+          </article>
+          <article class="metric">
+            <p class="metric__value">4.6/5</p>
+            <p class="metric__label">Caregiver satisfaction target</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
