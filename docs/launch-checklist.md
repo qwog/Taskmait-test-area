@@ -1,0 +1,23 @@
+# Launch Checklist
+
+- [ ] Trademark search “PlateKarma” on USPTO TESS
+- [ ] Single-purpose LLC formed or confirmed Taskmait will hold it
+- [ ] Apple Developer account enrolled ($99/yr)
+- [ ] Google Play Console enrolled ($25 one-time)
+- [ ] Domain platekarma.app registered
+- [ ] Custom EULA uploaded in App Store Connect
+- [ ] Privacy policy live at platekarma.app/legal/privacy
+- [ ] Moderation inbox monitored: takedown@platekarma.app
+- [ ] Sentry + PostHog instrumented
+- [ ] Supabase production project separate from dev, RLS verified
+- [ ] Load test: 1000 concurrent plate-lookups/sec
+- [ ] Rate-limit bypass testing
+- [ ] Motion-sensor safety modal tested
+- [ ] TestFlight beta with 50 users, 2 weeks
+- [ ] Play internal test track, 2 weeks
+- [ ] Screenshots at 6.7”, 6.1”, iPad 12.9”, Android phone + tablet
+- [ ] Reviewer demo account created
+- [ ] App preview video (30 sec, vibe-matched)
+- [ ] Support FAQ live
+- [ ] Takedown response process documented with 24h SLA
+- [ ] TikTok + Instagram accounts claimed (organic growth = sharable plate cards)

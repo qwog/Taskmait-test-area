@@ -1,0 +1,17 @@
+{
+  "playful": {
+    "tag_success": "Tagged! Tiny confetti unlocked 🎉",
+    "insufficient_data": "Not enough data yet 👀",
+    "score_low": "Karma: {score} — spicy roads today!"
+  },
+  "snarky": {
+    "tag_success": "Tagged. Court is in session ⚖️",
+    "insufficient_data": "Not enough data yet 👀",
+    "score_low": "Karma: {score} — certified chaos"
+  },
+  "wholesome": {
+    "tag_success": "Tagged! Thanks for playing kindly 🌻",
+    "insufficient_data": "Not enough data yet 👀",
+    "score_low": "Karma: {score} — room to grow!"
+  }
+}
