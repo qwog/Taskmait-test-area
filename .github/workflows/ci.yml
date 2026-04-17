@@ -1,0 +1,24 @@
+name: ci
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  validate-structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify monorepo folders
+        run: |
+          test -d app
+          test -d backend
+          test -d admin
+          test -d marketing
+          test -d docs
+      - name: Verify core scaffolding files
+        run: |
+          test -f app/lib/copy/vibes.json
+          test -f backend/migrations/0001_initial_schema.sql
+          test -f backend/seed/reasons_and_badges.sql
