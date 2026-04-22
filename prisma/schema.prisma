@@ -1,0 +1,357 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  SALES
+}
+
+enum CompanyStatus {
+  PROSPECT
+  ACTIVE_CUSTOMER
+  INACTIVE_CUSTOMER
+  LOST
+}
+
+enum LeadStatus {
+  NEW
+  ATTEMPTING_CONTACT
+  CONTACTED
+  QUALIFIED
+  UNQUALIFIED
+  CONVERTED
+  LOST
+}
+
+enum DealStage {
+  NEW_LEAD
+  CONTACTED
+  QUALIFIED
+  PROPOSAL_SENT
+  NEGOTIATION
+  VERBAL_YES
+  WON
+  LOST
+}
+
+enum BillingType {
+  ONE_TIME
+  MONTHLY
+  PACKAGE
+}
+
+enum IssueStatus {
+  PLANNING
+  SELLING
+  CLOSED
+  MAILED
+}
+
+enum SlotLocation {
+  FRONT
+  BACK
+  SPECIAL
+}
+
+enum PaymentStatus {
+  UNPAID
+  PARTIAL
+  PAID
+  WAIVED
+}
+
+enum AdStatus {
+  PENDING_ARTWORK
+  ARTWORK_RECEIVED
+  IN_DESIGN
+  APPROVED
+  SCHEDULED
+  PUBLISHED
+}
+
+enum RenewalStatus {
+  NONE
+  RENEWAL_DUE
+  RENEWAL_CONTACTED
+  RENEWED
+  NOT_RENEWING
+}
+
+enum RelatedType {
+  LEAD
+  COMPANY
+  CONTACT
+  DEAL
+  AD_SALE
+}
+
+enum ActivityType {
+  CALL
+  EMAIL
+  MEETING
+  NOTE
+  TASK
+  SMS
+}
+
+enum TaskStatus {
+  OPEN
+  IN_PROGRESS
+  DONE
+  CANCELLED
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model User {
+  id           String     @id @default(cuid())
+  firstName    String
+  lastName     String
+  email        String     @unique
+  passwordHash String
+  role         Role       @default(SALES)
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  companies    Company[]
+  leads        Lead[]
+  deals        Deal[]
+  createdTasks Task[]     @relation("CreatedTasks")
+  assignedTasks Task[]    @relation("AssignedTasks")
+}
+
+model Company {
+  id            String        @id @default(cuid())
+  companyName   String
+  legalName     String?
+  industry      String?
+  website       String?
+  phone         String?
+  email         String?
+  addressLine1  String?
+  addressLine2  String?
+  city          String?
+  state         String?
+  zip           String?
+  serviceArea   String?
+  companySize   Int?
+  leadSource    String?
+  status        CompanyStatus @default(PROSPECT)
+  tags          String        @default("")
+  notesSummary  String?
+  ownerUserId   String?
+  owner         User?         @relation(fields: [ownerUserId], references: [id])
+  contacts      Contact[]
+  deals         Deal[]
+  adSales       AdSale[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Contact {
+  id                     String   @id @default(cuid())
+  companyId              String
+  company                Company  @relation(fields: [companyId], references: [id])
+  firstName              String
+  lastName               String
+  title                  String?
+  email                  String?
+  phone                  String?
+  mobilePhone            String?
+  preferredContactMethod String?
+  isPrimaryContact       Boolean  @default(false)
+  status                 String?
+  deals                  Deal[]
+  adSales                AdSale[]
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+}
+
+model Lead {
+  id                 String     @id @default(cuid())
+  companyNameRaw     String
+  contactNameRaw     String?
+  email              String?
+  phone              String?
+  source             String?
+  industry           String?
+  territory          String?
+  notes              String?
+  status             LeadStatus @default(NEW)
+  assignedUserId     String?
+  assignedUser       User?      @relation(fields: [assignedUserId], references: [id])
+  convertedCompanyId String?
+  convertedContactId String?
+  convertedDealId    String?
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+}
+
+model Deal {
+  id               String    @id @default(cuid())
+  companyId        String
+  company          Company   @relation(fields: [companyId], references: [id])
+  primaryContactId String?
+  primaryContact   Contact?  @relation(fields: [primaryContactId], references: [id])
+  title            String
+  pipelineStage    DealStage @default(NEW_LEAD)
+  estimatedValue   Float     @default(0)
+  expectedCloseDate DateTime?
+  probabilityPercent Int     @default(10)
+  source           String?
+  assignedUserId   String?
+  assignedUser     User?     @relation(fields: [assignedUserId], references: [id])
+  lossReason       String?
+  nextStep         String?
+  lastActivityAt   DateTime?
+  adSales          AdSale[]
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model Product {
+  id           String      @id @default(cuid())
+  name         String
+  code         String      @unique
+  category     String?
+  description  String?
+  defaultPrice Float
+  billingType  BillingType
+  active       Boolean     @default(true)
+  displayOrder Int         @default(0)
+  inventorySlots InventorySlot[]
+  adSales      AdSale[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Issue {
+  id              String      @id @default(cuid())
+  issueName       String
+  month           Int
+  year            Int
+  mailDropDate    DateTime?
+  artworkDeadline DateTime?
+  salesDeadline   DateTime?
+  notes           String?
+  status          IssueStatus @default(PLANNING)
+  adSales         AdSale[]    @relation("IssueAdSales")
+  renewalAdSales  AdSale[]    @relation("RenewalIssue")
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@unique([month, year])
+}
+
+model InventorySlot {
+  id                   String       @id @default(cuid())
+  name                 String
+  code                 String       @unique
+  productId            String
+  product              Product      @relation(fields: [productId], references: [id])
+  location             SlotLocation
+  sizeLabel            String
+  sortOrder            Int          @default(0)
+  active               Boolean      @default(true)
+  defaultPriceOverride Float?
+  adSales              AdSale[]
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+}
+
+model AdSale {
+  id                   String        @id @default(cuid())
+  companyId            String
+  company              Company       @relation(fields: [companyId], references: [id])
+  contactId            String?
+  contact              Contact?      @relation(fields: [contactId], references: [id])
+  dealId               String?
+  deal                 Deal?         @relation(fields: [dealId], references: [id])
+  issueId              String
+  issue                Issue         @relation("IssueAdSales", fields: [issueId], references: [id])
+  inventorySlotId      String
+  inventorySlot        InventorySlot @relation(fields: [inventorySlotId], references: [id])
+  productId            String
+  product              Product       @relation(fields: [productId], references: [id])
+  saleName             String
+  quantity             Int           @default(1)
+  unitPrice            Float
+  totalPrice           Float
+  discountAmount       Float         @default(0)
+  finalPrice           Float
+  paymentStatus        PaymentStatus @default(UNPAID)
+  paymentDueDate       DateTime?
+  paymentReceivedDate  DateTime?
+  adStatus             AdStatus      @default(PENDING_ARTWORK)
+  renewalStatus        RenewalStatus @default(NONE)
+  renewalTargetIssueId String?
+  renewalTargetIssue   Issue?        @relation("RenewalIssue", fields: [renewalTargetIssueId], references: [id])
+  notes                String?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  @@unique([issueId, inventorySlotId])
+}
+
+model Activity {
+  id               String       @id @default(cuid())
+  relatedType      RelatedType
+  relatedId        String
+  activityType     ActivityType
+  subject          String
+  description      String?
+  dueDate          DateTime?
+  completedAt      DateTime?
+  createdByUserId  String
+  assignedUserId   String?
+  outcome          String?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+}
+
+model Task {
+  id              String       @id @default(cuid())
+  title           String
+  description     String?
+  status          TaskStatus   @default(OPEN)
+  priority        TaskPriority @default(MEDIUM)
+  dueDate         DateTime?
+  assignedUserId  String?
+  assignedUser    User?        @relation("AssignedTasks", fields: [assignedUserId], references: [id])
+  relatedType     RelatedType?
+  relatedId       String?
+  createdByUserId String
+  createdByUser   User         @relation("CreatedTasks", fields: [createdByUserId], references: [id])
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+model Note {
+  id              String     @id @default(cuid())
+  relatedType     RelatedType
+  relatedId       String
+  body            String
+  createdByUserId String
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+model PipelineStage {
+  id                 String  @id @default(cuid())
+  name               String  @unique
+  sortOrder          Int
+  probabilityDefault Int
+  isClosedWon        Boolean @default(false)
+  isClosedLost       Boolean @default(false)
+  active             Boolean @default(true)
+}
