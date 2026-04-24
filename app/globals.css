@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 255 255 255;
+  --foreground: 15 23 42;
+}
+
+html, body { height: 100%; }
+body { @apply bg-white text-slate-900 antialiased; }
+
+.field-root {
+  @apply bg-slate-900 text-white min-h-screen;
+  /* Disable iOS text selection and callouts for glove use */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}

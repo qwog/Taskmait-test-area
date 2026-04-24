@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+.env
+.env.local
+.vercel
+.DS_Store
+coverage
+playwright-report
+test-results
+*.log
+public/sw.js
+public/workbox-*.js
+tsconfig.tsbuildinfo
+.gitkeep

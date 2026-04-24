@@ -1,0 +1,50 @@
+import { createServerClient } from "@supabase/ssr";
+import { NextRequest, NextResponse } from "next/server";
+
+const PUBLIC = ["/", "/login", "/signup", "/api/stripe/webhooks"];
+
+export async function middleware(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+  if (PUBLIC.some((p) => pathname === p || pathname.startsWith(`${p}/`))) {
+    return NextResponse.next();
+  }
+  // Skip PWA/static and Next internals
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/icons") ||
+    pathname === "/manifest.json" ||
+    pathname === "/sw.js" ||
+    pathname.startsWith("/workbox-")
+  ) {
+    return NextResponse.next();
+  }
+
+  const res = NextResponse.next();
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll: () => req.cookies.getAll(),
+        setAll: (
+          entries: { name: string; value: string; options?: Record<string, unknown> }[]
+        ) => {
+          for (const { name, value, options } of entries) {
+            res.cookies.set(name, value, options);
+          }
+        },
+      },
+    }
+  );
+  const { data } = await supabase.auth.getUser();
+  if (!data.user) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.redirect(url);
+  }
+  return res;
+}
+
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+};
