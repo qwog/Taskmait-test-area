@@ -1,0 +1,8 @@
+export type ReservationStatus='pending'|'approved'|'confirmed'|'invoiced'|'paid'|'lost'|'waitlist';
+export type CreativeStatus='not_started'|'logo_needed'|'copy_needed'|'in_design'|'proof_sent'|'approved'|'complete';
+export interface Market{ id:string; name:string; city:string; state:string; description?:string; defaultDistributionCount:number; active:boolean; createdAt:string; updatedAt:string; }
+export interface Issue{id:string;marketId:string;month:number;year:number;distributionCount:number;printCost:number;postageCost:number;otherCosts:number;notes?:string;status:'planning'|'selling'|'designing'|'printing'|'mailed'|'archived';frontPrice:number;backPrice:number}
+export interface Reservation{id:string;businessName:string;contactName:string;email:string;phone:string;website?:string;tradeCategory:string;marketId:string;issueId:string;spot:string;headline?:string;notes?:string;status:ReservationStatus;source:'public'|'admin';priceQuoted:number;amountPaid:number;creativeStatus:CreativeStatus;followUpDate?:string;createdAt:string}
+export interface Advertiser{id:string;businessName:string;tradeCategory:string;contactName:string;email:string;phone:string;website?:string;address?:string;marketId:string;leadStatus:'new'|'contacted'|'interested'|'proposal_sent'|'reserved'|'won'|'lost'|'do_not_contact';notes?:string;lastContactDate?:string;nextFollowUpDate?:string}
+export interface FollowUpTask{id:string;title:string;relatedType:'advertiser'|'reservation';relatedId:string;dueDate:string;priority:'Low'|'Medium'|'High';status:'Open'|'Done';notes?:string}
+export interface Settings{businessName:string;contactEmail:string;contactPhone:string;defaultFrontSpotPrice:number;defaultBackSpotPrice:number;defaultDistributionCount:number;tradeCategories:string[]}
